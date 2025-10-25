@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { SimulationCard } from "@/components/SimulationCard";
-import { ChatBot } from "@/components/ChatBot";
 import { PendulumSimulation } from "@/components/simulations/PendulumSimulation";
 import { FunctionGrapher } from "@/components/simulations/FunctionGrapher";
 import { CellDivision } from "@/components/simulations/CellDivision";
 import { Button } from "@/components/ui/button";
-import { Activity, TrendingUp, Dna, ArrowLeft, Sparkles } from "lucide-react";
+import { Activity, TrendingUp, Dna, ArrowLeft } from "lucide-react";
 
 type SimulationType = "pendulum" | "function" | "cell" | null;
 
@@ -39,7 +38,7 @@ const Index = () => {
   if (activeSimulation) {
     return (
       <div className="min-h-screen bg-gradient-subtle p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <Button
             onClick={() => setActiveSimulation(null)}
             variant="outline"
@@ -49,16 +48,9 @@ const Index = () => {
             Back to Simulations
           </Button>
           
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              {activeSimulation === "pendulum" && <PendulumSimulation />}
-              {activeSimulation === "function" && <FunctionGrapher />}
-              {activeSimulation === "cell" && <CellDivision />}
-            </div>
-            <div className="lg:col-span-1">
-              <ChatBot />
-            </div>
-          </div>
+          {activeSimulation === "pendulum" && <PendulumSimulation />}
+          {activeSimulation === "function" && <FunctionGrapher />}
+          {activeSimulation === "cell" && <CellDivision />}
         </div>
       </div>
     );
@@ -69,10 +61,6 @@ const Index = () => {
       {/* Hero Section */}
       <div className="bg-gradient-primary text-white py-20 px-6">
         <div className="max-w-7xl mx-auto text-center animate-fade-in">
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-glow">
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-medium">Interactive Learning Platform</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Learn Through Experimentation
           </h1>
@@ -89,7 +77,7 @@ const Index = () => {
           <h2 className="text-3xl font-bold mb-3">Available Simulations</h2>
           <p className="text-muted-foreground text-lg">
             Choose a simulation to begin your learning journey. Each module includes interactive controls 
-            and an AI assistant to guide you.
+            for hands-on experimentation.
           </p>
         </div>
 
@@ -108,7 +96,7 @@ const Index = () => {
         </div>
 
         {/* Features Section */}
-        <div className="mt-20 grid md:grid-cols-3 gap-8">
+        <div className="mt-20 grid md:grid-cols-2 gap-8">
           <div className="text-center p-6 animate-slide-up">
             <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Activity className="w-8 h-8 text-white" />
@@ -120,16 +108,6 @@ const Index = () => {
           </div>
           
           <div className="text-center p-6 animate-slide-up" style={{ animationDelay: "100ms" }}>
-            <div className="w-16 h-16 bg-gradient-secondary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">AI-Powered Guidance</h3>
-            <p className="text-muted-foreground">
-              Get explanations and insights from your personal AI learning assistant
-            </p>
-          </div>
-          
-          <div className="text-center p-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
             <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Dna className="w-8 h-8 text-white" />
             </div>
