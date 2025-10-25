@@ -1,11 +1,144 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { SimulationCard } from "@/components/SimulationCard";
+import { ChatBot } from "@/components/ChatBot";
+import { PendulumSimulation } from "@/components/simulations/PendulumSimulation";
+import { FunctionGrapher } from "@/components/simulations/FunctionGrapher";
+import { CellDivision } from "@/components/simulations/CellDivision";
+import { Button } from "@/components/ui/button";
+import { Activity, TrendingUp, Dna, ArrowLeft, Sparkles } from "lucide-react";
+
+type SimulationType = "pendulum" | "function" | "cell" | null;
 
 const Index = () => {
+  const [activeSimulation, setActiveSimulation] = useState<SimulationType>(null);
+
+  const simulations = [
+    {
+      title: "Pendulum Motion",
+      description: "Explore the physics of pendulum motion. Adjust length, gravity, and initial angle to see how they affect oscillation.",
+      icon: Activity,
+      category: "physics" as const,
+      id: "pendulum" as const,
+    },
+    {
+      title: "Function Grapher",
+      description: "Visualize mathematical functions in real-time. Manipulate amplitude, frequency, and phase to understand their effects.",
+      icon: TrendingUp,
+      category: "math" as const,
+      id: "function" as const,
+    },
+    {
+      title: "Cell Division",
+      description: "Watch cells divide and multiply. Control the speed of mitosis to understand the process of cellular reproduction.",
+      icon: Dna,
+      category: "biology" as const,
+      id: "cell" as const,
+    },
+  ];
+
+  if (activeSimulation) {
+    return (
+      <div className="min-h-screen bg-gradient-subtle p-6">
+        <div className="max-w-7xl mx-auto">
+          <Button
+            onClick={() => setActiveSimulation(null)}
+            variant="outline"
+            className="mb-6"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Simulations
+          </Button>
+          
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              {activeSimulation === "pendulum" && <PendulumSimulation />}
+              {activeSimulation === "function" && <FunctionGrapher />}
+              {activeSimulation === "cell" && <CellDivision />}
+            </div>
+            <div className="lg:col-span-1">
+              <ChatBot />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-subtle">
+      {/* Hero Section */}
+      <div className="bg-gradient-primary text-white py-20 px-6">
+        <div className="max-w-7xl mx-auto text-center animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-glow">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium">Interactive Learning Platform</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            Learn Through Experimentation
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
+            Explore Physics, Mathematics, and Biology with interactive simulations. 
+            Manipulate parameters and observe cause-effect relationships in real-time.
+          </p>
+        </div>
+      </div>
+
+      {/* Simulations Grid */}
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mb-12 animate-slide-up">
+          <h2 className="text-3xl font-bold mb-3">Available Simulations</h2>
+          <p className="text-muted-foreground text-lg">
+            Choose a simulation to begin your learning journey. Each module includes interactive controls 
+            and an AI assistant to guide you.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {simulations.map((sim, index) => (
+            <div key={sim.id} style={{ animationDelay: `${index * 100}ms` }}>
+              <SimulationCard
+                title={sim.title}
+                description={sim.description}
+                icon={sim.icon}
+                category={sim.category}
+                onClick={() => setActiveSimulation(sim.id)}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Features Section */}
+        <div className="mt-20 grid md:grid-cols-3 gap-8">
+          <div className="text-center p-6 animate-slide-up">
+            <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Activity className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Real-Time Interaction</h3>
+            <p className="text-muted-foreground">
+              Adjust parameters with sliders and see instant visual feedback
+            </p>
+          </div>
+          
+          <div className="text-center p-6 animate-slide-up" style={{ animationDelay: "100ms" }}>
+            <div className="w-16 h-16 bg-gradient-secondary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">AI-Powered Guidance</h3>
+            <p className="text-muted-foreground">
+              Get explanations and insights from your personal AI learning assistant
+            </p>
+          </div>
+          
+          <div className="text-center p-6 animate-slide-up" style={{ animationDelay: "200ms" }}>
+            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Dna className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Visual Learning</h3>
+            <p className="text-muted-foreground">
+              Complex concepts made simple through beautiful visualizations
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
