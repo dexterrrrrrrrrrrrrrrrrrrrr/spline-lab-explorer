@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getCSSColor } from "@/lib/canvas-utils";
+import { getCanvasColor } from "@/lib/canvas-utils";
 
 type FunctionType = "sine" | "cosine" | "quadratic" | "cubic";
 
@@ -28,7 +28,7 @@ export function FunctionGrapher() {
     ctx.clearRect(0, 0, width, height);
 
     // Draw grid
-    ctx.strokeStyle = getCSSColor('--border');
+    ctx.strokeStyle = getCanvasColor('--border');
     ctx.lineWidth = 1;
 
     // Vertical lines
@@ -48,7 +48,7 @@ export function FunctionGrapher() {
     }
 
     // Draw axes
-    ctx.strokeStyle = getCSSColor('--foreground');
+    ctx.strokeStyle = getCanvasColor('--foreground');
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, centerY);
@@ -59,9 +59,9 @@ export function FunctionGrapher() {
 
     // Draw function
     const gradient = ctx.createLinearGradient(0, 0, width, 0);
-    gradient.addColorStop(0, getCSSColor('--primary'));
-    gradient.addColorStop(0.5, getCSSColor('--secondary'));
-    gradient.addColorStop(1, getCSSColor('--accent'));
+    gradient.addColorStop(0, getCanvasColor('--primary'));
+    gradient.addColorStop(0.5, getCanvasColor('--secondary'));
+    gradient.addColorStop(1, getCanvasColor('--accent'));
     
     ctx.strokeStyle = gradient;
     ctx.lineWidth = 3;
@@ -99,7 +99,7 @@ export function FunctionGrapher() {
 
     // Add glow effect
     ctx.shadowBlur = 10;
-    ctx.shadowColor = getCSSColor('--primary').replace('hsl(', 'hsla(').replace(')', ', 0.5)');
+    ctx.shadowColor = getCanvasColor('--primary', 0.5);
     ctx.stroke();
     ctx.shadowBlur = 0;
   }, [functionType, amplitude, frequency, phase]);
