@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Play, Pause, RotateCcw } from "lucide-react";
+import { getCSSColor } from "@/lib/canvas-utils";
 
 interface Cell {
   x: number;
@@ -42,14 +43,14 @@ export function CellDivision() {
             cell.x - offset, cell.y, 0,
             cell.x - offset, cell.y, cell.radius
           );
-          gradient1.addColorStop(0, "hsl(var(--accent))");
-          gradient1.addColorStop(1, "hsl(var(--primary))");
+          gradient1.addColorStop(0, getCSSColor('--accent'));
+          gradient1.addColorStop(1, getCSSColor('--primary'));
           
           ctx.fillStyle = gradient1;
           ctx.beginPath();
           ctx.arc(cell.x - offset, cell.y, cell.radius, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = "hsl(var(--primary))";
+          ctx.strokeStyle = getCSSColor('--primary');
           ctx.lineWidth = 2;
           ctx.stroke();
 
@@ -58,19 +59,19 @@ export function CellDivision() {
             cell.x + offset, cell.y, 0,
             cell.x + offset, cell.y, cell.radius
           );
-          gradient2.addColorStop(0, "hsl(var(--accent))");
-          gradient2.addColorStop(1, "hsl(var(--secondary))");
+          gradient2.addColorStop(0, getCSSColor('--accent'));
+          gradient2.addColorStop(1, getCSSColor('--secondary'));
           
           ctx.fillStyle = gradient2;
           ctx.beginPath();
           ctx.arc(cell.x + offset, cell.y, cell.radius, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = "hsl(var(--secondary))";
+          ctx.strokeStyle = getCSSColor('--secondary');
           ctx.lineWidth = 2;
           ctx.stroke();
 
           // Draw chromosomes
-          ctx.strokeStyle = "hsl(var(--foreground))";
+          ctx.strokeStyle = getCSSColor('--foreground');
           ctx.lineWidth = 3;
           for (let i = 0; i < 4; i++) {
             const angle = (i * Math.PI) / 2;
@@ -92,21 +93,21 @@ export function CellDivision() {
         } else {
           // Normal cell
           const gradient = ctx.createRadialGradient(cell.x, cell.y, 0, cell.x, cell.y, cell.radius);
-          gradient.addColorStop(0, "hsl(var(--accent) / 0.8)");
-          gradient.addColorStop(0.7, "hsl(var(--primary))");
-          gradient.addColorStop(1, "hsl(var(--primary) / 0.5)");
+          gradient.addColorStop(0, getCSSColor('--accent').replace('hsl(', 'hsla(').replace(')', ', 0.8)'));
+          gradient.addColorStop(0.7, getCSSColor('--primary'));
+          gradient.addColorStop(1, getCSSColor('--primary').replace('hsl(', 'hsla(').replace(')', ', 0.5)'));
           
           ctx.fillStyle = gradient;
           ctx.beginPath();
           ctx.arc(cell.x, cell.y, cell.radius, 0, Math.PI * 2);
           ctx.fill();
           
-          ctx.strokeStyle = "hsl(var(--primary))";
+          ctx.strokeStyle = getCSSColor('--primary');
           ctx.lineWidth = 2;
           ctx.stroke();
 
           // Draw nucleus
-          ctx.fillStyle = "hsl(var(--secondary))";
+          ctx.fillStyle = getCSSColor('--secondary');
           ctx.beginPath();
           ctx.arc(cell.x, cell.y, cell.radius * 0.4, 0, Math.PI * 2);
           ctx.fill();

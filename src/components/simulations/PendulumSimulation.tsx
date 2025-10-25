@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, RotateCcw } from "lucide-react";
+import { getCSSColor } from "@/lib/canvas-utils";
 
 export function PendulumSimulation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,7 +30,7 @@ export function PendulumSimulation() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw pivot
-      ctx.fillStyle = "hsl(var(--foreground))";
+      ctx.fillStyle = getCSSColor('--foreground');
       ctx.beginPath();
       ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
       ctx.fill();
@@ -39,7 +40,7 @@ export function PendulumSimulation() {
       const pendulumY = centerY + length[0] * Math.cos(angleRef.current);
 
       // Draw rod
-      ctx.strokeStyle = "hsl(var(--primary))";
+      ctx.strokeStyle = getCSSColor('--primary');
       ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
@@ -48,20 +49,20 @@ export function PendulumSimulation() {
 
       // Draw bob with gradient
       const gradient = ctx.createRadialGradient(pendulumX, pendulumY, 0, pendulumX, pendulumY, 20);
-      gradient.addColorStop(0, "hsl(var(--secondary))");
-      gradient.addColorStop(1, "hsl(var(--primary))");
+      gradient.addColorStop(0, getCSSColor('--secondary'));
+      gradient.addColorStop(1, getCSSColor('--primary'));
       
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(pendulumX, pendulumY, 20, 0, Math.PI * 2);
       ctx.fill();
       
-      ctx.strokeStyle = "hsl(var(--primary))";
+      ctx.strokeStyle = getCSSColor('--primary');
       ctx.lineWidth = 2;
       ctx.stroke();
 
       // Draw motion trail
-      ctx.strokeStyle = "hsl(var(--accent) / 0.3)";
+      ctx.strokeStyle = getCSSColor('--accent').replace('hsl(', 'hsla(').replace(')', ', 0.3)');
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(centerX, centerY, length[0], 0, Math.PI * 2);
